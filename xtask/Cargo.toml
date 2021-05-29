@@ -1,0 +1,20 @@
+cargo-features = ["per-package-target"]
+
+[package]
+name = "xtask"
+version = "0.1.0"
+edition = "2018"
+forced-target = "x86_64-unknown-linux-gnu"
+
+# See more 'cargo-features' keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[build-dependencies]
+vergen = "5.1.5"
+
+[dependencies]
+anyhow = "1.0.40"
+duct = "0.13.5"
+common = { path = "../common" }
+emboss = "*"
+structopt = "0.3"
+

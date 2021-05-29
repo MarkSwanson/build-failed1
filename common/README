@@ -1,0 +1,9 @@
+
+Common no-std code shared between all projects/targets.
+
+# Serde send/recv structs - JSON.
+# JSON validators.
+# embed metadata related to the build that is compatible with unix 'strings' 
+
+
+

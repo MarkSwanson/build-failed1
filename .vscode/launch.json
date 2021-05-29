@@ -1,0 +1,323 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    // "cwd": "${workspaceRoot}",
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "cwd": "${workspaceRoot}",
+            "name": "OpenOCD Debug hello",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "openocd",
+            "serverArgs": ["-f", "openocd.cfg", "-l", "openocd.log", "-d0"],
+            "gdbTarget": ":3333",
+            "runToMain": true,
+            "executable": "./target/thumbv7em-none-eabihf/debug/hello",
+            "gdbPath": "arm-none-eabi-gdb",
+            "configFiles": [
+                // for this dev board we need to override the default transport ..
+                // "interface/jlink.cfg",
+                "target/nrf52.cfg",
+            ],
+            "openOCDPreConfigLaunchCommands": [
+                "source [find interface/jlink.cfg]",
+                "transport select swd",
+            ],
+            "preLaunchTask": "${defaultBuildTask}",
+            "postLaunchCommands": [
+                "monitor rtt server start 8765 0",
+                // should span the *right* part of RAM
+                "monitor rtt setup 0x2003fbc8 0x30 \"SEGGER RTT\"",
+                "monitor rtt start",
+            ]
+        },
+        {
+            "cwd": "${workspaceRoot}",
+            "name": "OpenOCD Attach hello",
+            "request": "attach",
+            "type": "cortex-debug",
+            "servertype": "external",
+            "gdbTarget": ":50000",
+            // TODO adjust all these to fit your system, program and hardware
+            "executable": "./target/thumbv7em-none-eabihf/debug/hello",
+            "gdbPath": "arm-none-eabi-gdb", // or gdb or multiarch-gdb
+            // "svdFile": "nrf52840.svd", // optional
+        },
+
+        {
+            "cwd": "${workspaceRoot}",
+            "name": "stm32f1 Attach hello",
+            "request": "attach",
+            "type": "cortex-debug",
+            "servertype": "external",
+            "gdbTarget": ":50000",
+            // TODO adjust all these to fit your system, program and hardware
+            "executable": "./target/thumbv7m-none-eabi/debug/hello",
+            "gdbPath": "arm-none-eabi-gdb", // or gdb or multiarch-gdb
+            // "svdFile": "nrf52840.svd", // optional
+        },
+
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug integration test 'test'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--test=test",
+                    "--package=testsuite"
+                ],
+                "filter": {
+                    "name": "test",
+                    "kind": "test"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in library 'defmt-gdb'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--lib",
+                    "--package=defmt-gdb"
+                ],
+                "filter": {
+                    "name": "defmt-gdb",
+                    "kind": "lib"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'format'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=format",
+                    "--package=defmt-gdb"
+                ],
+                "filter": {
+                    "name": "format",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'format'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=format",
+                    "--package=defmt-gdb"
+                ],
+                "filter": {
+                    "name": "format",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'levels'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=levels",
+                    "--package=defmt-gdb"
+                ],
+                "filter": {
+                    "name": "levels",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'levels'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=levels",
+                    "--package=defmt-gdb"
+                ],
+                "filter": {
+                    "name": "levels",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'hello'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=hello",
+                    "--package=defmt-gdb"
+                ],
+                "filter": {
+                    "name": "hello",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'hello'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=hello",
+                    "--package=defmt-gdb"
+                ],
+                "filter": {
+                    "name": "hello",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'bitfield'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=bitfield",
+                    "--package=defmt-gdb"
+                ],
+                "filter": {
+                    "name": "bitfield",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'bitfield'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=bitfield",
+                    "--package=defmt-gdb"
+                ],
+                "filter": {
+                    "name": "bitfield",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'panic'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=panic",
+                    "--package=defmt-gdb"
+                ],
+                "filter": {
+                    "name": "panic",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'panic'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=panic",
+                    "--package=defmt-gdb"
+                ],
+                "filter": {
+                    "name": "panic",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'overflow'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=overflow",
+                    "--package=defmt-gdb"
+                ],
+                "filter": {
+                    "name": "overflow",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'overflow'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=overflow",
+                    "--package=defmt-gdb"
+                ],
+                "filter": {
+                    "name": "overflow",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}

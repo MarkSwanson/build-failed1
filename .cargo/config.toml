@@ -1,0 +1,42 @@
+
+# https://doc.rust-lang.org/cargo/reference/config.html
+
+# MUST specify all targets in this root .cargo/config.toml file.
+# Reason: if you build from the root of the workspace then Cargo will ignore
+#         package-specific .cargo/config.toml files.
+#         Iow 'cargo build' from the root compiles and links differently than when you build from the project dir.
+
+[target.thumbv7em-none-eabihf]
+runner = "probe-run --chip nrf52840 --probe 1366:1015"
+rustflags = [
+  "-C", "linker=flip-link",
+  "-C", "link-arg=-Tlink.x",
+  "-C", "link-arg=-Tdefmt.x",
+  # This is needed if your flash or ram addresses are not aligned to 0x10000 in memory.x
+  # See https://github.com/rust-embedded/cortex-m-quickstart/pull/95
+  "-C", "link-arg=--nmagic",
+]
+
+#  "-C", "linker=flip-link",
+[target.thumbv7m-none-eabi]
+runner = "probe-run --chip STM32F103C8 --probe 0483:3748"
+rustflags = [
+  "-C", "linker=flip-link",
+  "-C", "link-arg=-Tlink.x",
+  #"-C", "linker=arm-none-eabi-ld",
+  "-C", "link-arg=-Tdefmt.x",
+  # This is needed if your flash or ram addresses are not aligned to 0x10000 in memory.x
+  # See https://github.com/rust-embedded/cortex-m-quickstart/pull/95
+  "-C", "link-arg=--nmagic",
+]
+
+
+[target.armv7-unknown-linux-musleabihf]
+linker = "arm-linux-gnueabihf-ld"
+
+[alias]
+#rb = "run --target thumbv7em-none-eabihf --bin"
+#rrb = "run --target thumbv7em-none-eabihf --release --bin"
+xtask = "run --manifest-path xtask/Cargo.toml --"
+
+

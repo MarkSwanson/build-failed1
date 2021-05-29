@@ -1,0 +1,16 @@
+
+cargo-features = ["per-package-target"]
+
+[package]
+name = "rpi4"
+version = "0.1.0"
+edition = "2018"
+forced-target = "armv7-unknown-linux-musleabihf"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+nrf24l01 = "0.2.0"
+#spidev = "0.4.1"
+#sysfs_gpio = "0.5.4"
+

@@ -1,0 +1,17 @@
+{
+    // override the default setting (`cargo check --all-targets`) which produces the following error
+    // "can't find crate for `test`" when the default compilation target is a no_std target
+    // with these changes RA will call `cargo check --bins` on save
+    "rust-analyzer.checkOnSave.allTargets": false,
+    //"rust-analyzer.checkOnSave.extraArgs": [
+        //"--bins"
+    //],
+    "editor.minimap.enabled": false,
+    "editor.suggestSelection": "first",
+    "rust-analyzer.checkOnSave.command": "clippy",
+    "remote.SSH.remoteServerListenOnSocket": true,
+    "remote.SSH.remotePlatform": {
+        "linux": "linux"
+    },
+    "cortex-debug.openocdPath": "/usr/local/xpack-openocd-0.11.0-1/bin/openocd"
+}

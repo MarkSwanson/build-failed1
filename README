@@ -1,0 +1,33 @@
+
+
+TODO: update this...
+
+* DEFMT : defmt-gdb
+
+    Step 1. terminal: cargo xtask gdb
+    Step 2. vscode: *attach* debugger. @see launch.json "OpenOCD Attach hello"
+
+    DEFMT log lines will show up in the terminal (step 1)
+
+    You can't 'cargo test' because it's compiled for an ARM CPU.
+        We could use qemu for some of the tests, but any test that runs in qemu would be better put into common.
+
+* common: everything works in vscode.
+    cargo test --manifest-path common/Cargo.toml tests::it_works
+
+
+* stmf103
+
+    You can't 'cargo test' because it's compiled for an ARM CPU.
+        We could use qemu for some of the tests, but any test that runs in qemu would be better put into common.
+
+
+    We need to make enhancements to the xtask package so it can support different devices and programs.
+    Make most of the const Strings in xtask src/main.rs overridable by structopt program arguments.
+
+* rpi4
+    Need a gnueabihf linker so install:
+        apt install gcc-arm-linux-gnueabihf
+
+
+
