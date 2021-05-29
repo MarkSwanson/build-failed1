@@ -1,8 +1,8 @@
 
 [workspace]
 #exclude = ["xtask"]
-#members = ["xtask", "defmt-gdb", "common", "stmf103", "rpi4"]
-members = ["xtask", "defmt-gdb", "common", "stmf103"]
+members = ["xtask", "defmt-gdb", "common", "stmf103", "rpi4"]
+#members = ["xtask", "defmt-gdb", "common", "stmf103"]
 
 # cargo build/run
 [profile.dev]
